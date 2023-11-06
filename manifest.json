@@ -1,0 +1,17 @@
+{
+  "name": "Pepa Bros. plugin",
+  "id": "react-sample",
+  "api": "1.0.0",
+  "editorType": ["figma", "figjam"],
+  "permissions": ["payments"],
+  "enablePrivatePluginApi": true,
+  "main": "dist/code.js",
+  "ui": "dist/index.html",
+  "networkAccess": {
+    "allowedDomains": [
+      "https://www.google.com",
+      "https://img.thedailybeast.com/"
+    ],
+    "devAllowedDomains": ["http://localhost:9000"]
+  }
+}
