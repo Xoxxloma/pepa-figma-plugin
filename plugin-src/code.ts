@@ -33,18 +33,13 @@ figma.on('drop', async (event) => {
 
 figma.ui.onmessage = async msg => {
   if (msg.type === 'create-pictures') {
-
     await withSaveClose(async () => createRandomImages(msg.state))
   }
 
   if (msg.type === 'fill') {
-    console.log(msg, 'msg')
     await withSaveClose(async () => fillNodes(msg.category))
   }
 
-  if (msg.type === 'drop-files') {
-    console.log(msg.files, 'files')
-  }
   if (msg.type === 'cancel') {
     figma.closePlugin();
   }
@@ -54,6 +49,10 @@ figma.ui.onmessage = async msg => {
 };
 
 async function fillNodes (category) {
+  if (!figma.currentPage.selection.length) {
+    figma.notify("Please select at least one node", { error: true })
+    return
+  }
   for (const node of figma.currentPage.selection) {
     const picResp = await fetchPicture(category.id)
     const buff = await picResp.arrayBuffer()
@@ -80,11 +79,8 @@ interface IState {
 }
 async function createRandomImages (state: IState) {
   const nodes: SceneNode[] = [];
-  const promises = Array.from(Array(state.count).keys()).map(async(_, i) => {
+  const promises = Array(state.count).fill(null).map(async(_, i) => {
     const picResp = await fetchPicture(state.selectedCategory.id)
-    // const picResp = await fetch('http://localhost:9000/getPicture' + createUrlSearchParams({
-    //   category: state.selectedCategory.id,
-    // }))
     const buff = await picResp.arrayBuffer()
     const image = figma.createImage(new Uint8Array(buff))
     const node = figma.createRectangle()
@@ -118,7 +114,7 @@ async function withSaveClose (cb: () => Promise<void>) {
 }
 
 async function fetchPicture (categoryId) {
-  return fetch('http://localhost:9000/getPicture' + createUrlSearchParams({ category: categoryId }))
+  return fetch('https://pepavpn.ru:4006/getPicture' + createUrlSearchParams({ category: categoryId }))
 }
 
 // const seconds = figma.payments.getUserFirstRanSecondsAgo()

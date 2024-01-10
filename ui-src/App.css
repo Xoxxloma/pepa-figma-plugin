@@ -87,7 +87,8 @@ svg {
 }
 
 .tab-item {
-  background-color: white;
+  background-color: var(--color-bg);
+  color: var(--color-text);
   width: 100%;
   padding: 5px;
   cursor: pointer;
@@ -116,9 +117,9 @@ svg {
   padding: 15px;
   border-width: 2px;
   border-radius: 2px;
-  border-color: #eeeeee;
+  border-color: var(--color-border);
   border-style: dashed;
-  background-color: #fafafa;
+  background-color: var(--color-bg);
   color: #bdbdbd;
   outline: none;
   transition: border .24s ease-in-out;
@@ -132,7 +133,8 @@ svg {
 }
 
 .description {
-  font-size: 12px;
+  text-align: center;
+  font-size: 16px;
   color: lightslategray;
 }
 
@@ -144,7 +146,8 @@ svg {
 }
 
 .selected-text {
-  background-color: #ffffff;
+  background-color: var(--color-bg);
+  color: var(--color-text);
   padding: 6px 20px;
   border-bottom: 1px solid var(--color-main-blue);
 }
@@ -154,14 +157,14 @@ svg {
   position: absolute;
   right: 10px;
   top: 16px;
-  border: 7px solid black;
-  border-color: black transparent transparent transparent;
+  border: 7px solid var(--color-main-blue);
+  border-color: var(--color-main-blue) transparent transparent transparent;
   transition: .2s all;
 }
 
 .selected-text.active::after {
   top: 8px;
-  border-color: transparent transparent black transparent;
+  border-color: transparent transparent var(--color-main-blue) transparent;
 }
 
 ul {
@@ -180,19 +183,18 @@ ul {
 li {
   list-style-type: none;
   padding: 6px 20px;
-  background-color: #ffffff;
+  background-color: var(--color-bg);
   border-bottom: 1px solid var(--color-main-blue);
   cursor: pointer;
 }
 
 .selected-option {
   background-color: var(--color-main-blue);
-  color: #ffffff;
+  color: var(--color-bg-active);;
 }
 
 li:hover {
-  background-color: var(--color-main-blue-hover);
-  color: #ffffff;
+  background-color: var(--color-bg-hover);
   transition: 0.3s ease-in all;
 }
 

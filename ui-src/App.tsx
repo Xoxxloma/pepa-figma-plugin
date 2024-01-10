@@ -24,7 +24,7 @@ function App() {
     const isDrop = selectedTabId === 'DROP'
 
     const getCategories = async () => {
-      const resp = await fetch('http://localhost:9000/getCategories')
+      const resp = await fetch('https://pepavpn.ru:4006/getCategories')
       const body = await resp.json()
       setCategoryOptions([ baseOption, ...body.categories])
     }
@@ -72,10 +72,6 @@ function App() {
 
     return (
     <div className="main">
-      <div style={{ position: 'absolute', top: 3, left: 3}}>
-        <img src={logoPng} style={{width: 30, height: 30, borderRadius: '50%'}} />
-      </div>
-      <h4 style={{alignSelf: 'center', margin: 2}}>Pepa pictures filler</h4>
         <div className="description">
             {description[selectedTabId]}
         </div>

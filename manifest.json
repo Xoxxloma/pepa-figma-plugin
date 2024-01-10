@@ -1,17 +1,17 @@
 {
-  "name": "Pepa Bros. plugin",
-  "id": "react-sample",
+  "name": "Pepa pictures filler",
+  "id": "1326887237733083398",
   "api": "1.0.0",
   "editorType": ["figma", "figjam"],
-  "permissions": ["payments"],
   "enablePrivatePluginApi": true,
   "main": "dist/code.js",
   "ui": "dist/index.html",
   "networkAccess": {
     "allowedDomains": [
       "https://www.google.com",
-      "https://img.thedailybeast.com/"
+      "https://pepavpn.ru:4006"
     ],
-    "devAllowedDomains": ["http://localhost:9000"]
+    "devAllowedDomains": ["http://localhost:9000", "https://pepavpn.ru:4006"],
+    "reasoning": "HYIBLYA"
   }
 }

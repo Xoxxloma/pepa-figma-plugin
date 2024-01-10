@@ -9,7 +9,6 @@ interface IProps {
 }
 
 export const Select: FC<IProps> = ({ optionsList, selectedOption, onSetOptionClick }) => {
-    const selectRef = useRef(null);
     const [showOptionList, setOptionList] = useState(false);
     const onSelectToggle = () => setOptionList(prev => !prev)
     const handler = (option: IOption) => () => {
