@@ -7,12 +7,12 @@ import {Select} from "./Components/Select";
 import {IOption} from "./Models/IOption";
 
 const description:Record<string, string> = {
-    DROP: 'Select nodes to fill, then select files on your pc, that\'s all',
-    FILL: 'Select nodes and we\'ll fill it with our random pictures',
-    CREATE: 'We\'ll just create picked amount random pictures for you'
+    DROP: 'Select nodes and fill it by your files',
+    FILL: 'Select nodes and fill it by our random pictures',
+    CREATE: 'Create picked amount random pictures'
 }
 
-const tabs = [{id: 'DROP', name: 'Drop files'}, {id: "FILL", name: "Fill elems" }, {id: "CREATE", name: 'Create'}]
+const tabs = [{id: 'DROP', name: 'Drop'}, {id: "FILL", name: "Fill" }, {id: "CREATE", name: 'Create'}]
 const baseOption = { name: 'Random', id: 'Random' }
 
 function App() {
@@ -78,23 +78,17 @@ function App() {
           <div onClick={() => setSelectedTabId(id)} className={`tab-item ${id === selectedTabId && 'tab-selected'}`}>{name}</div>
         ))}
       </div>
-        <div className="description">
-            {description[selectedTabId]}
-        </div>
+        <div className="description">{description[selectedTabId]}</div>
         {!isDrop && <div style={{display: 'flex', flexDirection: 'column', width: '100%', boxSizing: 'border-box'}}>
-          <span className="input-label">picture category</span>
-          <Select optionsList={categoryOptions} onSetOptionClick={onSetOptionClick}
-                  selectedOption={state.selectedCategory}/>
+          <span className="input-label">Category</span>
+          <Select optionsList={categoryOptions} onSetOptionClick={onSetOptionClick} selectedOption={state.selectedCategory}/>
         </div>
         }
       { isCreateTab && (
-          <div style={{display: 'flex', gap: 10, width: '100%', justifyContent: 'space-between'}}>
-               <MyInput name="count" label="pictures Count" value={state.count} onChange={onChangeInputHandler} />
-              <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'center', gap: 15}}>
-                <span className="input-label pa">picture size</span>
-              <MyInput name="width" label="width" value={state.width} onChange={onChangeInputHandler} />
-              <MyInput name="height" label="height" value={state.height} onChange={onChangeInputHandler} />
-              </div>
+          <div style={{display: 'flex', gap: 10, width: '100%', justifyContent: 'space-between', marginTop: 5}}>
+              <MyInput name="count" label="Count" value={state.count} onChange={onChangeInputHandler} />
+              <MyInput name="width" label="Width" value={state.width} onChange={onChangeInputHandler} />
+              <MyInput name="height" label="Height" value={state.height} onChange={onChangeInputHandler} />
           </div>
           )}
       { isDrop && (

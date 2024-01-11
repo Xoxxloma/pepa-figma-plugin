@@ -9,9 +9,9 @@ interface IProps {
 
 export const MyInput:FC<IProps> = ({ value, onChange, label, name}) => {
   return (
-    <div style={{marginTop: 15, display: 'flex', flexDirection: 'column'}}>
-    <input id="input" type="number" min="0" name={name} value={value} onChange={onChange} />
-    <label htmlFor="input" className="input-label">{label}</label>
-  </div>
+    <div className="input-container">
+      <label htmlFor="input" className="input-label">{label}</label>
+      <input id="input" type="number" min="1" name={name} value={value || ''} onChange={onChange} />
+    </div>
   )
 }
