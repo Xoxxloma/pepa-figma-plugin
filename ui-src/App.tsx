@@ -72,24 +72,25 @@ function App() {
 
     return (
     <div className="main">
-        <div className="description">
-            {description[selectedTabId]}
-        </div>
+    <div style={{display: "flex", flexDirection: "column", flex: 1, gap: 10, width: '100%' }}>
       <div style={{  display: "flex", width: "100%", alignItems: "stretch"}}>
         {tabs.map(({id, name}) => (
           <div onClick={() => setSelectedTabId(id)} className={`tab-item ${id === selectedTabId && 'tab-selected'}`}>{name}</div>
         ))}
       </div>
-        {!isDrop && <div style={{display: 'flex', flexDirection: 'column', width: '100%', boxSizing: 'border-box', padding: "5px 20px 0px 20px "}}>
+        <div className="description">
+            {description[selectedTabId]}
+        </div>
+        {!isDrop && <div style={{display: 'flex', flexDirection: 'column', width: '100%', boxSizing: 'border-box'}}>
           <span className="input-label">picture category</span>
           <Select optionsList={categoryOptions} onSetOptionClick={onSetOptionClick}
                   selectedOption={state.selectedCategory}/>
         </div>
         }
       { isCreateTab && (
-          <div style={{display: 'flex', gap: 10, position: 'relative', marginTop: 5 }}>
+          <div style={{display: 'flex', gap: 10, width: '100%', justifyContent: 'space-between'}}>
                <MyInput name="count" label="pictures Count" value={state.count} onChange={onChangeInputHandler} />
-              <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'center'}}>
+              <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'center', gap: 15}}>
                 <span className="input-label pa">picture size</span>
               <MyInput name="width" label="width" value={state.width} onChange={onChangeInputHandler} />
               <MyInput name="height" label="height" value={state.height} onChange={onChangeInputHandler} />
@@ -104,11 +105,12 @@ function App() {
           </div>
       </section>
       )}
-      <div style={{display: 'flex', position: 'absolute', bottom: 10, width: "100%", justifyContent: "space-around"}}>
-      <button onClick={onCancel}>Cancel</button>
-        { isCreateTab && <button className="brand" onClick={onCreate}>Create</button> }
-        { isFillTab && <button className="brand" onClick={onFill}>Fill</button> }
+        </div>
+      <div style={{ width: "100%"}}>
+          { isCreateTab && <button className="brand" onClick={onCreate}>Create</button> }
+          { isFillTab && <button className="brand" onClick={onFill}>Fill</button> }
       </div>
+
     </div>
     );
 }

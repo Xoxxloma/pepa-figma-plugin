@@ -37,6 +37,24 @@ body {
   margin: 0;
 }
 
+main::--webkit-scrollbar {
+  width: 10px !important;
+  height: 10px !important;
+}
+
+main::--webkit-scrollbar-track {
+  background-color: var(--color-bg-hover);
+  border-radius: 100px !important;
+}
+
+main::--webkit-scrollbar-thumb {
+  background-color: var(--color-main-blue);
+}
+
+main::--webkit-scrollbar-thumb:hover {
+  background-color: var(--color-main-blue-hover);
+}
+
 button {
   border-radius: 0.25rem;
   background: var(--color-bg);
@@ -60,6 +78,7 @@ button.brand {
   --color-text: var(--color-text-brand);
   --color-bg-hover: var(--color-main-blue-hover);
   --color-border: transparent;
+  width: 100%;
 }
 
 input {
@@ -82,8 +101,11 @@ svg {
   align-items: center;
   display: flex;
   flex-direction: column;
-  padding: 5px;
-  max-height: 100%;
+  padding: 12px;
+  height: 100%;
+  gap: 10px;
+  justify-content: space-between;
+  box-sizing: border-box;
 }
 
 .tab-item {
@@ -109,11 +131,14 @@ svg {
   position: absolute;
 }
 
+
 .dropzone {
   flex: 1;
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   padding: 15px;
   border-width: 2px;
   border-radius: 2px;
@@ -124,17 +149,21 @@ svg {
   outline: none;
   transition: border .24s ease-in-out;
   cursor: pointer;
+  box-sizing: border-box;
 }
 
 .dropzone-container {
   display: flex;
   width: 100%;
   margin-top: 5px;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
 }
 
 .description {
   text-align: center;
-  font-size: 16px;
+  font-size: 12px;
   color: lightslategray;
 }
 
