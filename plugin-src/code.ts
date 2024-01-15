@@ -10,8 +10,13 @@ function between(min, max) {
 }
 
 figma.on('drop', async (event) => {
+  if (!figma.currentPage.selection.length) {
+    figma.notify("Please select at least one node to fill", { error: true })
+    return
+  }
   const { files, dropMetadata } = event;
   let idx = 0
+  logEvent('DROP')
   for (const node of figma.currentPage.selection) {
     const fileIdx = files[idx] ? idx : between(0, files.length - 1);
     const buff = await files[fileIdx].getBytesAsync();
@@ -33,10 +38,21 @@ figma.on('drop', async (event) => {
 
 figma.ui.onmessage = async msg => {
   if (msg.type === 'create-pictures') {
+    const {count, height, width} = msg.state
+    if (!count || !height || !width) {
+      figma.notify("Count, height and width fields can't be empty", { error: true })
+      return
+    }
+    logEvent('CREATE_PICTURES')
     await withSaveClose(async () => createRandomImages(msg.state))
   }
 
   if (msg.type === 'fill') {
+    if (!figma.currentPage.selection.length) {
+      figma.notify("Please select at least one node to fill", { error: true })
+      return
+    }
+    logEvent('FILL')
     await withSaveClose(async () => fillNodes(msg.category))
   }
 
@@ -49,10 +65,6 @@ figma.ui.onmessage = async msg => {
 };
 
 async function fillNodes (category) {
-  if (!figma.currentPage.selection.length) {
-    figma.notify("Please select at least one node", { error: true })
-    return
-  }
   for (const node of figma.currentPage.selection) {
     const picResp = await fetchPicture(category.id)
     const buff = await picResp.arrayBuffer()
@@ -115,6 +127,13 @@ async function withSaveClose (cb: () => Promise<void>) {
 
 async function fetchPicture (categoryId) {
   return fetch('https://pepavpn.ru:4006/getPicture' + createUrlSearchParams({ category: categoryId }))
+}
+
+async function logEvent(event) {
+  try {
+    await fetch(`https://pepavpn.ru:4006/log/${event}`)
+  } catch (e) {
+  }
 }
 
 // const seconds = figma.payments.getUserFirstRanSecondsAgo()

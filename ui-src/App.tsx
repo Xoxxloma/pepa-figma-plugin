@@ -1,5 +1,4 @@
 import React, {useEffect, useRef, useState} from "react";
-import logoPng from "./glassesDown.png";
 import "./App.css";
 import { MyInput } from "./Components/Input";
 import {useDropzone} from "react-dropzone";
@@ -104,7 +103,6 @@ function App() {
           { isCreateTab && <button className="brand" onClick={onCreate}>Create</button> }
           { isFillTab && <button className="brand" onClick={onFill}>Fill</button> }
       </div>
-
     </div>
     );
 }
