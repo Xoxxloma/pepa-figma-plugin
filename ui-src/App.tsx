@@ -1,9 +1,9 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, {useEffect, useState} from "react";
 import "./App.css";
-import { MyInput } from "./Components/Input";
-import {useDropzone} from "react-dropzone";
-import {Select} from "./Components/Select";
 import {IOption} from "./Models/IOption";
+import {FillTab} from "./Components/FillTab";
+import {CreateTab} from "./Components/CreateTab";
+import {DropTab} from "./Components/DropTab";
 
 const description:Record<string, string> = {
     DROP: 'Select nodes and fill it by your files',
@@ -15,7 +15,6 @@ const tabs = [{id: 'DROP', name: 'Drop'}, {id: "FILL", name: "Fill" }, {id: "CRE
 const baseOption = { name: 'Random', id: 'Random' }
 
 function App() {
-    const [state, setState] = useState({ count: 5, width: 150, height: 150, selectedCategory: baseOption })
     const [categoryOptions, setCategoryOptions] = useState<IOption[]>([])
     const [selectedTabId, setSelectedTabId] = useState(tabs[0].id)
     const isFillTab = selectedTabId === 'FILL'
@@ -32,79 +31,31 @@ function App() {
         getCategories()
     }, [])
 
-    const {getRootProps, getInputProps} = useDropzone({
-        onDrop: (acceptedFiles, other) => {
-            window.parent.postMessage({
-                pluginDrop: {
-                    clientX: 0,
-                    clientY: 0,
-                    files: acceptedFiles,
-                    dropMetadata: { some: "1" }
-                }
-            }, '*');
-
-        },
-        accept: {
-            'image/*': ['.jpeg', '.png']
-        }
-    });
-
-    const onChangeInputHandler = (e: any) => {
-    setState((prev) => ({ ...prev, [e.target.name]: Number.parseInt(e.target.value) || 0}))
-    }
-
-    const onCreate = () => {
-    parent.postMessage({ pluginMessage: { type: "create-pictures", state } }, "*");
-    };
-
-    const onCancel = () => {
-    parent.postMessage({ pluginMessage: { type: "cancel" } }, "*");
-    };
-
-    const onFill = () => {
-    parent.postMessage({ pluginMessage: { type: 'fill', category: state.selectedCategory }}, "*")
-    }
-
-    const onSetOptionClick = (option: {id: string; name: string}) => {
-      setState((prev) => ({...prev, selectedCategory: option }))
-    }
 
     return (
     <div className="main">
-    <div style={{display: "flex", flexDirection: "column", flex: 1, gap: 10, width: '100%' }}>
-      <div style={{  display: "flex", width: "100%", alignItems: "stretch"}}>
-        {tabs.map(({id, name}) => (
-          <div onClick={() => setSelectedTabId(id)} className={`tab-item ${id === selectedTabId && 'tab-selected'}`}>{name}</div>
-        ))}
-      </div>
+        <div style={{display: "flex", flexDirection: "column", flex: 1, gap: 10, width: '100%' }}>
+          <div style={{  display: "flex", width: "100%", alignItems: "stretch"}}>
+            {tabs.map(({id, name}) => (
+              <div onClick={() => setSelectedTabId(id)} className={`tab-item ${id === selectedTabId && 'tab-selected'}`}>{name}</div>
+            ))}
+          </div>
         <div className="description">{description[selectedTabId]}</div>
-        {!isDrop && <div style={{display: 'flex', flexDirection: 'column', width: '100%', boxSizing: 'border-box'}}>
-          <span className="input-label">Category</span>
-          <Select optionsList={categoryOptions} onSetOptionClick={onSetOptionClick} selectedOption={state.selectedCategory}/>
+            <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '100%'}}>
+                {isFillTab && <FillTab categoryOptions={categoryOptions} />}
+                {isCreateTab && <CreateTab categoryOptions={categoryOptions} />}
+                {isDrop && <DropTab />}
+            </div>
         </div>
-        }
-      { isCreateTab && (
-          <div style={{display: 'flex', gap: 10, width: '100%', justifyContent: 'space-between', marginTop: 5}}>
-              <MyInput name="count" label="Count" value={state.count} onChange={onChangeInputHandler} />
-              <MyInput name="width" label="Width" value={state.width} onChange={onChangeInputHandler} />
-              <MyInput name="height" label="Height" value={state.height} onChange={onChangeInputHandler} />
-          </div>
-          )}
-      { isDrop && (
-      <section className="dropzone-container">
-          <div {...getRootProps({className: 'dropzone'})}>
-              <input {...getInputProps()} />
-              <p>Drag 'n' drop or click to select files</p>
-          </div>
-      </section>
-      )}
-        </div>
-      <div style={{ width: "100%"}}>
-          { isCreateTab && <button className="brand" onClick={onCreate}>Create</button> }
-          { isFillTab && <button className="brand" onClick={onFill}>Fill</button> }
-      </div>
     </div>
     );
 }
+
+// <div className="optionsContainer">
+//     <div className="categoryOption__item">
+//         <img style={{maxWidth: 60, height: '100%'}} src={glassesDown} />
+//         <div style={{ alignSelf: 'center', lineBreak: 'auto'}}>Architecture</div>
+//     </div>
+// </div>
 
 export default App;

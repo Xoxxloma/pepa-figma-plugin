@@ -22,7 +22,7 @@ function between(min, max) {
     Math.random() * (max - min) + min
   )
 }
-
+// TODO добавить проверку на то что папка есть
 app.get('/getPicture', function (req, res) {
   const { idx, category } = req.query
   const localFolderName = (category && category !== 'Random') ? category : folder[between(0, folder.length)]
@@ -47,13 +47,13 @@ app.get('/log/:operation', (req, res) => {
 })
 
 
-// const httpServer = http.createServer(app);
-//
-// httpServer.listen(PORT, () => console.log(`Pepa Figma plugin HTTP server started on ${PORT} port`));
+const httpServer = http.createServer(app);
 
-https.createServer({
-  key: fs.readFileSync("./pepavpn.ru.key"),
-  cert: fs.readFileSync("./pepavpn.ru.crt"),
-  ca: fs.readFileSync("./pepavpn.ru.ca-bundle"),
-  passphrase: 'pp0zDNMA'
-}, app).listen(PORT, () => console.log(`Pepa Figma plugin HTTPS server started on ${PORT} port`));
+httpServer.listen(PORT, () => console.log(`Pepa Figma plugin HTTP server started on ${PORT} port`));
+
+// https.createServer({
+//   key: fs.readFileSync("./pepavpn.ru.key"),
+//   cert: fs.readFileSync("./pepavpn.ru.crt"),
+//   ca: fs.readFileSync("./pepavpn.ru.ca-bundle"),
+//   passphrase: 'pp0zDNMA'
+// }, app).listen(PORT, () => console.log(`Pepa Figma plugin HTTPS server started on ${PORT} port`));

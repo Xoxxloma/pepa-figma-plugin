@@ -2,6 +2,7 @@
   --color-bg: var(--figma-color-bg);
   --color-bg-hover: var(--figma-color-bg-hover);
   --color-bg-active: var(--figma-color-bg-pressed);
+  --color-bg-disabled-secondary: var(--figma-color-bg-disabled-secondary);
   --color-border: var(--figma-color-border);
   --color-border-focus: var(rgb(30,190,230));
   --color-icon: var(--figma-color-icon);
@@ -16,6 +17,7 @@
   --color-bg-inverse: var(----figma-color-bg-inverse);
   --color-bg-component: var(--figma-color-bg-component);
   --color-bg-component-hover: var(--figma-color-bg-component-hover);
+  --color-bg-component-tertiary: var(--figma-color-bg-component-tertiary)
 }
 
 html,
@@ -31,6 +33,42 @@ button {
     Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   font-size: 1rem;
   text-align: center;
+}
+
+.optionsContainer {
+  box-sizing: border-box;
+  height: 135px;
+  width: 100%;
+  overflow: auto;
+  background-color: white;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  padding: 5px;
+}
+
+.categoryOption__item {
+  display: flex;
+  width: calc(50% - 3px);
+  height: 60px;
+  background-color: #6969dd;
+  border-radius: 8px;
+  overflow: hidden;
+  gap: 5px;
+}
+
+.optionsContainer, .select-options::-webkit-scrollbar {
+  width: 6px;
+}
+
+.optionsContainer, .select-options::-webkit-scrollbar-track {
+  background-color: #e4e4e4;
+  border-radius: 100px;
+}
+
+.optionsContainer, .select-options::-webkit-scrollbar-thumb {
+  background-color: var(--color-bg-component);
+  border-radius: 100px;
 }
 
 body {
@@ -63,6 +101,13 @@ button.brand {
   --color-bg-hover: var(--color-bg-component-hover);
   --color-border: transparent;
   width: 100%;
+}
+
+
+button.brand:disabled {
+  --color-bg: var(--color-bg-disabled-secondary);
+  --color-bg-hover: var(--color-bg-disabled-secondary);
+  --color-bg-active: var(--color-bg-disabled-secondary);
 }
 
 input {
@@ -208,6 +253,8 @@ ul {
 
 .select-options {
   position: absolute;
+  height: 130px;
+  overflow: auto;
   width: 100%;
   z-index: 2;
   padding-bottom: 15px;
@@ -222,7 +269,7 @@ li {
 }
 
 .selected-option {
-  background-color: var(--color-bg-component);
+  background-color: var(--color-bg-component-hover);
   color: var(--color-text-on-component);
 }
 

@@ -1,0 +1,1 @@
+export const BASE_OPTION = { name: 'Random', id: 'Random' }
