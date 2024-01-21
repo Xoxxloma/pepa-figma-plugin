@@ -51,11 +51,6 @@ function App() {
     );
 }
 
-// <div className="optionsContainer">
-//     <div className="categoryOption__item">
-//         <img style={{maxWidth: 60, height: '100%'}} src={glassesDown} />
-//         <div style={{ alignSelf: 'center', lineBreak: 'auto'}}>Architecture</div>
-//     </div>
-// </div>
+
 
 export default App;

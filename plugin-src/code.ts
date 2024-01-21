@@ -1,7 +1,7 @@
 // @ts-nocheck
 import {createUrlSearchParams} from "../ui-src/Utils";
 
-figma.showUI(__html__, { themeColors: true, height: 340, width: 365 });
+figma.showUI(__html__, { themeColors: true, height: 350, width: 400 });
 
 function between(min, max) {
   return Math.floor(
@@ -81,21 +81,35 @@ interface IState {
   width: number;
   height: number;
   selectedCategory: { id: string; name: string }
+  gap: number;
+  columns: number;
 }
 async function createRandomImages (state: IState) {
-  const nodes: SceneNode[] = [];
-  const promises = Array(state.count).fill(null).map(async(_, i) => {
-    const picResp = await fetchPicture(state.selectedCategory.id)
+  const { height, width, count, columns, selectedCategory, gap} = state
+  let currY = 0;
+  let currX = 0
+
+  const nodes: SceneNode[] = Array(count).fill(null).map((_, i) => {
+    const node = figma.createRectangle()
+    node.resize(width, height)
+    node.x = currX;
+    node.y = currY;
+    const isLastIdxInRow = (i + 1) % columns === 0
+    currX = isLastIdxInRow ? 0 : currX + width + gap
+    currY = isLastIdxInRow ? currY + height + gap : currY
+
+    return node
+  })
+
+  const promises = nodes.map(async (node) => {
+    const picResp = await fetchPicture(selectedCategory.id)
     const buff = await picResp.arrayBuffer()
     const image = figma.createImage(new Uint8Array(buff))
-    const node = figma.createRectangle()
-
-    node.resize(state.width, state.height)
-    node.x = (i * state.width + 30);
     node.fills = [{ type: 'IMAGE', imageHash: image.hash, scaleMode: 'FILL' }]
-    nodes.push(node)
   })
   await Promise.all(promises)
+
+  console.log(nodes, 'nodes')
   figma.currentPage.selection = nodes;
   figma.viewport.scrollAndZoomIntoView(nodes);
   // figma.closePlugin();

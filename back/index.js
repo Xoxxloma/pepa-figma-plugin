@@ -6,8 +6,6 @@ const cors = require("cors")
 const fs = require("fs");
 const app = express();
 
-app.use(cors({ origin: "*"}))
-
 const PORT = 4006;
 
 const folder = fs.readdirSync(path.join(__dirname, "pictures"))
@@ -19,9 +17,16 @@ const files = folder.reduce((acc, val) => {
 
 function between(min, max) {
   return Math.floor(
-    Math.random() * (max - min) + min
+      Math.random() * (max - min) + min
   )
 }
+
+app.use(cors({ origin: "*"}))
+
+// добавляем путь до статики с обложками с префиксом /covers
+app.use('/covers', express.static('covers', { extensions: ['png', 'jpg', 'jpeg']}))
+
+
 // TODO добавить проверку на то что папка есть
 app.get('/getPicture', function (req, res) {
   const { idx, category } = req.query
@@ -47,13 +52,13 @@ app.get('/log/:operation', (req, res) => {
 })
 
 
-const httpServer = http.createServer(app);
+// const httpServer = http.createServer(app);
+//
+// httpServer.listen(PORT, () => console.log(`Pepa Figma plugin HTTP server started on ${PORT} port`));
 
-httpServer.listen(PORT, () => console.log(`Pepa Figma plugin HTTP server started on ${PORT} port`));
-
-// https.createServer({
-//   key: fs.readFileSync("./pepavpn.ru.key"),
-//   cert: fs.readFileSync("./pepavpn.ru.crt"),
-//   ca: fs.readFileSync("./pepavpn.ru.ca-bundle"),
-//   passphrase: 'pp0zDNMA'
-// }, app).listen(PORT, () => console.log(`Pepa Figma plugin HTTPS server started on ${PORT} port`));
+https.createServer({
+  key: fs.readFileSync("./pepavpn.ru.key"),
+  cert: fs.readFileSync("./pepavpn.ru.crt"),
+  ca: fs.readFileSync("./pepavpn.ru.ca-bundle"),
+  passphrase: 'pp0zDNMA'
+}, app).listen(PORT, () => console.log(`Pepa Figma plugin HTTPS server started on ${PORT} port`));

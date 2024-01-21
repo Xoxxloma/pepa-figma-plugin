@@ -17,7 +17,7 @@ export const Select: FC<IProps> = ({ optionsList, selectedOption, onSetOptionCli
     }
 
     const closeOnClickOutside = (e: any) => {
-        if (!e.target.id.includes("picked-option") && !e.target.id.includes("select-option")) {
+        if (!e.target.id.includes("picked-option") && !e.target.id.includes("select-option") && !e.target.id.includes('options-container')) {
             setOptionList(false)
         }
     }
@@ -37,7 +37,7 @@ export const Select: FC<IProps> = ({ optionsList, selectedOption, onSetOptionCli
                 {selectedOption.name}
             </div>
             {showOptionList && (
-                <ul className="select-options">
+                <ul className="select-options" id="options-container">
                     {optionsList.map(option => {
                         return (
                             <li

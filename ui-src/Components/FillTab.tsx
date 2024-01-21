@@ -1,9 +1,11 @@
-import {Select} from "./Select";
 import React, {useEffect, useState} from "react";
 import {BASE_OPTION} from "../consts";
 
+interface IProps {
+    categoryOptions: { name: string; id: string}[]
+}
 
-export const FillTab = ({ categoryOptions }) => {
+export const FillTab = ({ categoryOptions }: IProps) => {
     const [isButtonDisabled, setButtonDisabled] = useState(true)
     const [selectedCategory, setSelectedCategory] = useState(BASE_OPTION)
 
@@ -31,15 +33,24 @@ export const FillTab = ({ categoryOptions }) => {
 
     const onFill = () => {
         setButtonDisabled(true)
+        // TODO необязательно отправлять всю категорию, используется только айдишник
         parent.postMessage({ pluginMessage: { type: 'fill', category: selectedCategory }}, "*")
     }
 
     return (
         <>
-            <div style={{display: 'flex', flexDirection: 'column', width: '100%', boxSizing: 'border-box'}}>
-                <span className="input-label">Category</span>
-                <Select optionsList={categoryOptions} onSetOptionClick={onSetOptionClick} selectedOption={selectedCategory}/>
-            </div>
+             <div className="optionsContainer">
+                 { categoryOptions.map((opt) => (
+                     <div
+                         className={`categoryOption__item ${selectedCategory.id === opt.id ? 'categoryOption__item_selected ' : ''}`}
+                         key={opt.id}
+                         onClick={() => onSetOptionClick(opt)}
+                     >
+                        <img style={{maxWidth: 64, height: 48}} src={`https://pepavpn.ru:4006/covers/${opt.id}`} alt={opt.name} />
+                        <div style={{ lineBreak: 'auto', textAlign: 'start'}}>{opt.name}</div>
+                     </div>
+                 ))}
+             </div>
             <button disabled={isButtonDisabled} className="brand" onClick={onFill}>Fill</button>
         </>
     )
