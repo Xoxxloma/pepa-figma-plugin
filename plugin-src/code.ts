@@ -109,7 +109,6 @@ async function createRandomImages (state: IState) {
   })
   await Promise.all(promises)
 
-  console.log(nodes, 'nodes')
   figma.currentPage.selection = nodes;
   figma.viewport.scrollAndZoomIntoView(nodes);
   // figma.closePlugin();

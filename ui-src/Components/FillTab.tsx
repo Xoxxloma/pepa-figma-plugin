@@ -46,7 +46,7 @@ export const FillTab = ({ categoryOptions }: IProps) => {
                          key={opt.id}
                          onClick={() => onSetOptionClick(opt)}
                      >
-                        <img style={{maxWidth: 64, height: 48}} src={`https://pepavpn.ru:4006/covers/${opt.id}`} alt={opt.name} />
+                        <img style={{maxWidth: 64, height: 48, borderRadius: 6}} src={`https://pepavpn.ru:4006/covers/${opt.id}`} alt={opt.name} />
                         <div style={{ lineBreak: 'auto', textAlign: 'start'}}>{opt.name}</div>
                      </div>
                  ))}

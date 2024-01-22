@@ -49,14 +49,14 @@ button {
 
 .categoryOption__item {
   display: flex;
-  width: calc(50% - 3px);
+  width: calc(50% - 4px);
   height: 63px;
   background-color: var(--color-bg-tertiary);
   border-radius: 8px;
   overflow: hidden;
-  gap: 5px;
+  gap: 8px;
   align-items: center;
-  padding: 5px;
+  padding: 8px;
   box-sizing: border-box;
   cursor: pointer;
 }
@@ -116,6 +116,7 @@ button.brand:disabled {
   --color-bg: var(--color-bg-disabled-secondary);
   --color-bg-hover: var(--color-bg-disabled-secondary);
   --color-bg-active: var(--color-bg-disabled-secondary);
+  cursor: auto;
 }
 
 input {
@@ -139,7 +140,7 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 input:focus-visible {
-  border-color: var(--color-bg-inverse);
+  border-color: var(--color-bg-component);
 }
 
 .input-container {
@@ -197,9 +198,9 @@ svg {
   align-items: center;
   justify-content: center;
   padding: 15px;
-  border-width: 2px;
+  border-width: 3px;
   border-radius: 2px;
-  border-color: var(--color-bg-inverse);
+  border-color: var(--color-bg-component);
   border-style: dashed;
   background-color: var(--color-bg);
   color: var(--color-bg-inverse);
