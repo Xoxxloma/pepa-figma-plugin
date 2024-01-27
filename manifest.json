@@ -6,6 +6,7 @@
   "enablePrivatePluginApi": true,
   "main": "dist/code.js",
   "ui": "dist/index.html",
+  "permissions": ["currentuser"],
   "networkAccess": {
     "allowedDomains": [
       "https://www.google.com",

@@ -38,7 +38,7 @@ button {
 
 .optionsContainer {
   box-sizing: border-box;
-  height: 210px;
+  height: 340px;
   width: 100%;
   overflow: auto;
   display: flex;

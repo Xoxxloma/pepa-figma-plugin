@@ -1,7 +1,7 @@
 // @ts-nocheck
 import {createUrlSearchParams} from "../ui-src/Utils";
 
-figma.showUI(__html__, { themeColors: true, height: 350, width: 400 });
+figma.showUI(__html__, { themeColors: true, height: 480, width: 400 });
 
 function between(min, max) {
   return Math.floor(
@@ -46,12 +46,12 @@ figma.ui.onmessage = async msg => {
   }
 
   if (msg.type === 'create-pictures') {
-    logEvent('CREATE_PICTURES')
+    logEvent('CREATE_PICTURES', msg.state.selectedCategory.name)
     await withSaveClose(async () => createRandomImages(msg.state))
   }
 
   if (msg.type === 'fill') {
-    logEvent('FILL')
+    logEvent('FILL', msg.category.name)
     await withSaveClose(async () => fillNodes(msg.category))
   }
 
@@ -137,9 +137,10 @@ async function fetchPicture (categoryId) {
   return fetch('https://pepavpn.ru:4006/getPicture' + createUrlSearchParams({ category: categoryId }))
 }
 
-async function logEvent(event) {
+async function logEvent(event, category = 'empty') {
+  const user = figma.currentUser
   try {
-    await fetch(`https://pepavpn.ru:4006/log/${event}`)
+    await fetch(`https://pepavpn.ru:4006/log?event=${event}&user=${user.id}&category=${category}`)
   } catch (e) {
   }
 }

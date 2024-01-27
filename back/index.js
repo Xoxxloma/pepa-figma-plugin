@@ -46,8 +46,8 @@ app.get('/picturesCount', function(req, res) {
   res.status(200).send({ length: 1488 })
 })
 
-app.get('/log/:operation', (req, res) => {
-  console.log(`operation: ${req.params?.operation}, time: ${new Date()}`)
+app.get('/log', (req, res) => {
+  console.log(`operation=${req.query?.event},userId=${req.query?.user},category=${req.query?.category},time=${new Date()}`)
   res.sendStatus(200)
 })
 

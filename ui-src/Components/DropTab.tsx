@@ -24,7 +24,7 @@ export const DropTab = () => {
         <section className="dropzone-container">
             <div {...getRootProps({className: 'dropzone'})}>
                 <input {...getInputProps()} />
-                <p>Drag 'n' drop or click to select files</p>
+                <p>Drag 'n' drop or<br /> click to select files</p>
             </div>
         </section>
     )

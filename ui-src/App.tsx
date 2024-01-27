@@ -11,7 +11,7 @@ const description:Record<string, string> = {
     CREATE: 'Create picked amount random pictures'
 }
 
-const tabs = [{id: 'DROP', name: 'Drop'}, {id: "FILL", name: "Fill" }, {id: "CREATE", name: 'Create'}]
+const tabs = [{id: "FILL", name: "Fill" }, {id: "CREATE", name: 'Create'}, {id: 'DROP', name: 'Drop'} ]
 const baseOption = { name: 'Random', id: 'Random' }
 
 function App() {
