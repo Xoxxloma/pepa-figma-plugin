@@ -47,8 +47,28 @@ app.get('/picturesCount', function(req, res) {
 })
 
 app.get('/log', (req, res) => {
-  console.log(`operation=${req.query?.event},userId=${req.query?.user},category=${req.query?.category},time=${new Date()}`)
-  res.sendStatus(200)
+  try {
+    const filePath = path.resolve(__dirname, 'plugin-metrics.log')
+    const log = `user_click {category="${req.query?.category}", userid="${req.query?.user}", operation="${req.query?.event}"} 1\r\n`
+    console.log(`operation=${req.query?.event},userId=${req.query?.user},category=${req.query?.category},time=${new Date()}`)
+    fs.appendFileSync(filePath, log, 'utf8');
+  } catch (e){
+    console.log(e, 'error in log')
+  } finally {
+    res.sendStatus(200)
+  }
+})
+
+app.get('/plugin-metrics', (req, res) => {
+  try {
+    const filePath = path.resolve(__dirname, 'plugin-metrics.log')
+    const metrics = fs.readFileSync(filePath, { encoding: 'utf-8'})
+    fs.writeFileSync(filePath, '')
+    res.setHeader('Content-type', 'text/plain');
+    res.status(200).send(metrics)
+  } catch (e) {
+    res.sendStatus(502)
+  }
 })
 
 

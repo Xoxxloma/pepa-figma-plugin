@@ -18,7 +18,8 @@
   --color-bg-component: var(--figma-color-bg-component);
   --color-bg-component-hover: var(--figma-color-bg-component-hover);
   --color-bg-component-tertiary: var(--figma-color-bg-component-tertiary);
-  --color-bg-tertiary: var(--figma-color-bg-tertiary)
+  --color-bg-tertiary: var(--figma-color-bg-tertiary);
+  --color-icon-component-pressed: var(-figma-color-icon-component-pressed);
 }
 
 html,
@@ -116,7 +117,7 @@ button.brand:disabled {
   --color-bg: var(--color-bg-disabled-secondary);
   --color-bg-hover: var(--color-bg-disabled-secondary);
   --color-bg-active: var(--color-bg-disabled-secondary);
-  cursor: auto;
+  cursor: not-allowed;
 }
 
 input {
@@ -192,7 +193,6 @@ svg {
 
 .dropzone {
   flex: 1;
-  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -210,13 +210,19 @@ svg {
   box-sizing: border-box;
 }
 
+.disabled {
+  border-color: var(--color-bg-disabled-secondary);
+  cursor: no-drop;
+}
+
 .dropzone-container {
   display: flex;
+  flex-direction: column;
   width: 100%;
   margin-top: 5px;
+  box-sizing: border-box;
+  gap: 8px;
   flex: 1;
-  align-items: center;
-  justify-content: center;
 }
 
 .description {
@@ -262,7 +268,7 @@ ul {
 
 .select-options {
   position: absolute;
-  height: 130px;
+  height: 250px;
   overflow: auto;
   width: 100%;
   z-index: 2;
