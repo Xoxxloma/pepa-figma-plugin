@@ -14,6 +14,8 @@ const files = folder.reduce((acc, val) => {
   return acc;
 }, {})
 
+const certPath = '/etc/letsencrypt/live/pepavpn.ru/';
+
 
 function between(min, max) {
   return Math.floor(
@@ -49,9 +51,9 @@ app.get('/picturesCount', function(req, res) {
 app.get('/log', (req, res) => {
   try {
     const filePath = path.resolve(__dirname, 'plugin-metrics.log')
-    const log = `user_click {category="${req.query?.category}", userid="${req.query?.user}", operation="${req.query?.event}"} 1\r\n`
+    const log = `user_click{category="${req.query?.category}", userid="${req.query?.user}", operation="${req.query?.event}"} 1.0`
     console.log(`operation=${req.query?.event},userId=${req.query?.user},category=${req.query?.category},time=${new Date()}`)
-    fs.appendFileSync(filePath, log, 'utf8');
+    fs.appendFileSync(filePath, log+"\n", 'utf8');
   } catch (e){
     console.log(e, 'error in log')
   } finally {
@@ -64,7 +66,6 @@ app.get('/plugin-metrics', (req, res) => {
     const filePath = path.resolve(__dirname, 'plugin-metrics.log')
     const metrics = fs.readFileSync(filePath, { encoding: 'utf-8'})
     fs.writeFileSync(filePath, '')
-    res.setHeader('Content-type', 'text/plain');
     res.status(200).send(metrics)
   } catch (e) {
     res.sendStatus(502)
@@ -77,8 +78,6 @@ app.get('/plugin-metrics', (req, res) => {
 // httpServer.listen(PORT, () => console.log(`Pepa Figma plugin HTTP server started on ${PORT} port`));
 
 https.createServer({
-  key: fs.readFileSync("./pepavpn.ru.key"),
-  cert: fs.readFileSync("./pepavpn.ru.crt"),
-  ca: fs.readFileSync("./pepavpn.ru.ca-bundle"),
-  passphrase: 'pp0zDNMA'
+  key: fs.readFileSync(path.join(certPath, 'privkey.pem')), // Приватный ключ
+  cert: fs.readFileSync(path.join(certPath, 'fullchain.pem')) // Сертификат
 }, app).listen(PORT, () => console.log(`Pepa Figma plugin HTTPS server started on ${PORT} port`));
